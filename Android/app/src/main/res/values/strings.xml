@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Penta-CV-IR</string>
+    <string name="subscription_key">39d6105270934ec6a11dddf94822dd10</string>
+
+    <!-- Select image activity -->
+    <string name="select_an_image">Select an Image</string>
+    <string name="take_photo">Take a Photo</string>
+    <string name="select_image_in_album">From Gallery</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_analyze">Analyze Image</string>
+    <string name="title_activity_weather">Weather Info</string>
+    <string name="title_activity_analyze_domain">Analyze Image In Domain</string>
+    <string name="title_activity_describe">Describe Image</string>
+    <string name="title_activity_recognize">Recognize Text</string>
+    <string name="title_activity_thumbnail">Thumbnail Image</string>
+    <string name="clarifai_clientId">2Swsthb2pK23w_3OwTv9P4os3Uh1wUjL8lNk4Xl7</string>
+    <string name="clarifai_clientSecret">URSQeHJHvmlcPJX0RS8AzN69rkJPCN0wJkr4ZqU4</string>
+
+</resources>
