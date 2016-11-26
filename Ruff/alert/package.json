@@ -1,0 +1,14 @@
+{
+    "name": "alert",
+    "version": "0.1.0",
+    "description": "use LED light to alert people around when the environment is dim",
+    "author": "Yiluo Li",
+    "main": "src/index.js",
+    "ruff": {
+        "boards": {
+            "ruff-mbd-v1": "^4.2.0",
+            "*": "*"
+        },
+        "dependencies": {}
+    }
+}
