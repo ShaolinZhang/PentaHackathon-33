@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Microsoft will receive the images you upload and may use them to improve Vision API and related services. By submitting an image, you confirm that you have consent from everyone in it."/>
+            android:text="This is the submission of Penta Hackathon 2016 Team 33, the product is partially based on Microsoft's Project Oxford, licensed under MIT License. Microsoft may gather data you submitted. The copyright of this product remains with the four members of Team 33."/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -24,10 +24,7 @@ import java.util.Locale;
 
 public class WeatherActivity extends AppCompatActivity implements View.OnClickListener, TextToSpeech.OnInitListener{
 
-    //EditText editTextCityName;
-    //Button btnByCityName;
     TextView textViewResult;
-    // TextView textViewInfo;
     private Button mTTSButton;
     private TextToSpeech mTextToSpeech;
 
@@ -35,8 +32,6 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
-        //editTextCityName = (EditText) findViewById(R.id.cityname);
-        //btnByCityName = (Button) findViewById(R.id.bycityname);
         mTTSButton = (Button) findViewById(R.id.btnTTS);
         mTTSButton.setOnClickListener(this);
         mTextToSpeech = new TextToSpeech(this, this);
@@ -45,17 +40,6 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         new OpenWeatherMapTask(
                 "Shanghai, CN",
                 textViewResult).execute();
-
-        // textViewInfo = (TextView)findViewById(R.id.info);
-
-        //btnByCityName.setOnClickListener(new View.OnClickListener() {
-        // @Override
-         //   public void onClick(View v) {
-         //       new OpenWeatherMapTask(
-         //               editTextCityName.getText().toString(),
-         //               textViewResult).execute();
-          //  }
-       // });
     }
 
     @Override
@@ -72,7 +56,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if (mTextToSpeech != null && !mTextToSpeech.isSpeaking()) {
-            mTextToSpeech.setPitch(0.5f);// 设置音调，值越大声音越尖（女生），值越小则变成男声,1.0是常规
+            mTextToSpeech.setPitch(1.0f);
             mTextToSpeech.speak(textViewResult.getText().toString(),
                     TextToSpeech.QUEUE_FLUSH, null);
         }
@@ -161,58 +145,48 @@ class OpenWeatherMapTask extends AsyncTask<Void, Void, String> {
                 if (cod != null) {
                     if (cod.equals("200")) {
 
-                        jsonResult += jsonHelperGetString(JsonObject, "name") + "\n";
+                        // Get city data
+                        jsonResult += "You are at " + jsonHelperGetString(JsonObject, "name") + "\n";
                         JSONObject sys = jsonHelperGetJSONObject(JsonObject, "sys");
                         if (sys != null) {
                             jsonResult += jsonHelperGetString(sys, "country") + "\n";
                         }
-                  //      jsonResult += "\n";
 
+                        // Get coordinate data
                         JSONObject coord = jsonHelperGetJSONObject(JsonObject, "coord");
                         if (coord != null) {
                             String lon = jsonHelperGetString(coord, "lon");
                             String lat = jsonHelperGetString(coord, "lat");
-                            //    jsonResult += "lon: " + lon + "\n";
-                            //    jsonResult += "lat: " + lat + "\n";
+                                jsonResult += "This is for demo only. Your longitude is " + lon + "\n";
+                                jsonResult += ", latitude is " + lat + "\n";
                         }
                         jsonResult += "\n";
 
+
+                        // Get summarized weather data
                         JSONArray weather = jsonHelperGetJSONArray(JsonObject, "weather");
                         if (weather != null) {
                             for (int i = 0; i < weather.length(); i++) {
                                 JSONObject thisWeather = weather.getJSONObject(i);
-                    //            jsonResult += "weather " + i + ":\n";
-                    //            jsonResult += "id: " + jsonHelperGetString(thisWeather, "id") + "\n";
-                                jsonResult += jsonHelperGetString(thisWeather, "main") + "\n";
-                    //            jsonResult += jsonHelperGetString(thisWeather, "description") + "\n";
-                                jsonResult += "\n";
+                                jsonResult += "The weather at your current location is" +  jsonHelperGetString(thisWeather, "main") + "\n";
                             }
                         }
 
+                        // Get weather data
                         JSONObject main = jsonHelperGetJSONObject(JsonObject, "main");
                         if (main != null) {
-                            jsonResult += "temp: " + jsonHelperGetString(main, "temp") + "\n";
-                     //       jsonResult += "pressure: " + jsonHelperGetString(main, "pressure") + "\n";
-                            jsonResult += "humidity: " + jsonHelperGetString(main, "humidity") + "\n";
-                               jsonResult += "temp_min: " + jsonHelperGetString(main, "temp_min") + "\n";
-                            jsonResult += "temp_max: " + jsonHelperGetString(main, "temp_max") + "\n";
-                     //       jsonResult += "sea_level: " + jsonHelperGetString(main, "sea_level") + "\n";
-                     //       jsonResult += "grnd_level: " + jsonHelperGetString(main, "grnd_level") + "\n";
+                            jsonResult += "The temperature at your location is " + jsonHelperGetString(main, "temp") + "degrees Celcius";
+                            jsonResult += ", with a humidity of " + jsonHelperGetString(main, "humidity") + "percent" + "\n";
+                               jsonResult += "The lowest forecast temperature is : " + jsonHelperGetString(main, "temp_min") + "degrees Celcius, ";
+                            jsonResult += "while the highest temperature is: " + jsonHelperGetString(main, "temp_max") + "degrees Celcius";
                             jsonResult += "\n";
                         }
 
-                        jsonResult += "visibility: " + jsonHelperGetString(JsonObject, "visibility") + "\n";
-                        jsonResult += "\n";
+                        jsonResult += "The visibility of at your location is  " + jsonHelperGetString(JsonObject, "visibility") + "meters" + "\n";
 
+                        // Get wind data.
                         JSONObject wind = jsonHelperGetJSONObject(JsonObject, "wind");
-                        if (wind != null) {
-                     //       jsonResult += "wind:\n";
-                     //       jsonResult += "speed: " + jsonHelperGetString(wind, "speed") + "\n";
-                     //       jsonResult += "deg: " + jsonHelperGetString(wind, "deg") + "\n";
-                     //       jsonResult += "\n";
-                        }
-
-                        //...incompleted
+                        if (wind != null) {}
 
                     } else if (cod.equals("404")) {
                         String message = jsonHelperGetString(JsonObject, "message");

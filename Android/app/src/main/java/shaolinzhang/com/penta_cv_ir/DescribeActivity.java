@@ -20,10 +20,6 @@ import com.google.gson.Gson;
 import com.microsoft.projectoxford.vision.VisionServiceClient;
 import com.microsoft.projectoxford.vision.VisionServiceRestClient;
 import com.microsoft.projectoxford.vision.contract.AnalysisResult;
-import com.microsoft.projectoxford.vision.contract.Category;
-import com.microsoft.projectoxford.vision.contract.Face;
-import com.microsoft.projectoxford.vision.contract.Tag;
-import com.microsoft.projectoxford.vision.contract.Caption;
 import com.microsoft.projectoxford.vision.rest.VisionServiceException;
 import shaolinzhang.com.penta_cv_ir.helper.ImageHelper;
 
@@ -212,27 +208,12 @@ public class DescribeActivity extends AppCompatActivity implements View.OnClickL
                 Gson gson = new Gson();
                 AnalysisResult result = gson.fromJson(data, AnalysisResult.class);
 
-//                mEditText.append("Image format: " + result.metadata.format + "\n");
-//                mEditText.append("Image width: " + result.metadata.width + ", height:" + result.metadata.height + "\n");
-//                mEditText.append("\n");
-//
-//                for (Caption caption: result.description.captions) {
-//                    mEditText.append("Caption: " + caption.text + ", confidence: " + caption.confidence + "\n");
-//                }
-//                mEditText.append("\n");
-
-//                for (String tag: result.description.tags) {
-//                    mEditText.append("Tag: " + tag + "\n");
-//                }
                 for(int i = 0; i < 5; i++){
                     String tag = result.description.tags.get(i);
                     mEditText.append("" + tag + "\n");
                 }
                 mEditText.append("\n");
 
-//                mEditText.append("\n--- Raw Datza ---\n\n");
-//                mEditText.append(data);
-//                mEditText.setSelection(0);
             }
 
             mButtonSelectImage.setEnabled(true);
