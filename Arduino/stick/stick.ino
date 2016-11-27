@@ -66,6 +66,14 @@ char notes[] = "ccggaagffeeddc";
 int beats[] = { 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 4 };
 int tempo = 300;
 
+#define didFall 10
+
+int previousAX;
+int previousAY;
+int previousAZ;
+int differenceAX;
+int differenceAY;
+int differenceAZ;
 
 void setup() {
     // join I2C bus (I2Cdev library doesn't do this automatically)
@@ -91,6 +99,14 @@ void setup() {
     pinMode(ledPin, OUTPUT);
     pinMode(Pin, INPUT);
     pinMode(speakerPin, OUTPUT);
+
+    previousAX = 0;
+    previousAY = 0;
+    previousAZ = 0;
+
+    differenceAX = 0;
+    differenceAY = 0;
+    differenceAZ = 0;
 }
 
 void loop() {
@@ -120,14 +136,22 @@ void loop() {
     for (int i=0; i<mag; i++)
         Serial.print("*");
     Serial.print("\n");
-
+    differenceAX = previousAX - ax;
+    differenceAY = previousAY - ay;
+    differenceAZ = previousAZ - az;
+    
+    if ((differenceAX > 4000 && differenceAY > 4000) || (differenceAX > 4000 && differenceAZ > 4000) || (differenceAZ > 4000 && differenceAY > 34000))
+      analogWrite(didFall, 255);
+    else
+      analogWrite(didFall, 0);
+      
     // lit up signal light to indicate activity
     if (currentPWM > 255 || currentPWM < 0)
         increment *= -1;
     currentPWM += increment;
     analogWrite(signalLight, currentPWM / 10);
 
-     pinMode(speakerPin, OUTPUT);
+    pinMode(speakerPin, OUTPUT);
   State = digitalRead(Pin);
   if (!State) {
     digitalWrite(ledPin, HIGH);
@@ -139,6 +163,10 @@ void loop() {
       else {
     digitalWrite(ledPin, LOW);
   }
+    previousAX = ax;
+    previousAY = ay;
+    previousAZ = az;
+    
     globalCount++;
 }
 
