@@ -11,17 +11,15 @@ $.ready(function (error) {
             $('#luminature').getTemperature(function (error, temperature) {
                 if(error) {
                     console.error(error);
-                    console.lg("NOOO");
                     return;
                 }
-                currentTemp = temperature;
                 console.log('Temperature: ', temperature);
             });
             }, 1000)
 
         setInterval(
             function() {
-            $('#luminature').getRelavitiveHumidity(function (error, humidity) {
+            $('#luminature').getRelativeHumidity(function (error, humidity) {
                 if(error) {
                     console.error(error);
                     return;
@@ -37,8 +35,15 @@ $.ready(function (error) {
                     console.error(error);
                     return;
                 }
-                if ( illuminance < 50)
-                    $('#RGB'.setRGB(80, 0, 0));
+                if ( illuminance < 20) {
+                    $('#RGB').setRGB(255, 0, 255);
+                    beep();
+                }
+
+                else {
+                    $('#RGB').setRGB(0, 0, 0);
+                    stopBeep();
+                }
                 console.log('Illuminance: ', illuminance);
             });
             }, 1000)

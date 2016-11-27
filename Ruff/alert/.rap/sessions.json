@@ -1,0 +1,9 @@
+{
+    "sessions": {
+        "ruffd/lan/192.168.78.1": {
+            "name": "192.168.78.1",
+            "board": "ruff-mbd-v1",
+            "address": "192.168.78.1"
+        }
+    }
+}
