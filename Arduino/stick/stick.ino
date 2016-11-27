@@ -49,11 +49,6 @@ int16_t ax, ay, az;
 int16_t gx, gy, gz;
 int16_t mx, my, mz;
 
-//RGB LED lights
-#define LED_R 9
-#define LED_G 10
-#define LED_B 11
-
 //Fading and brightening signal light
 #define signalLight 6
 int increment;
@@ -61,6 +56,16 @@ int currentPWM;
 
 //To set up a counting number for the color switch
 int globalCount;
+
+#define Pin 2
+const int ledPin =  13;
+int State = 0;
+int speakerPin = 9;
+int length = 14;
+char notes[] = "ccggaagffeeddc";
+int beats[] = { 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 4 };
+int tempo = 300;
+
 
 void setup() {
     // join I2C bus (I2Cdev library doesn't do this automatically)
@@ -82,6 +87,10 @@ void setup() {
     globalCount = 0;
     increment = 5;
     currentPWM = 0;
+
+    pinMode(ledPin, OUTPUT);
+    pinMode(Pin, INPUT);
+    pinMode(speakerPin, OUTPUT);
 }
 
 void loop() {
@@ -118,24 +127,36 @@ void loop() {
     currentPWM += increment;
     analogWrite(signalLight, currentPWM / 10);
 
+     pinMode(speakerPin, OUTPUT);
+  State = digitalRead(Pin);
+  if (!State) {
+    digitalWrite(ledPin, HIGH);
+    for (int i = 0; i < length; i++) {
+     playNote(notes[i], beats[i] * tempo);
+      delay(tempo / 100); 
+    }
+  }
+      else {
+    digitalWrite(ledPin, LOW);
+  }
     globalCount++;
 }
 
-void switchColor()
-{
-  if(globalCount % 200 > 100)
-    setColor(255, 0, 255);
-  else
-    setColor(0, 255, 255);
+  void playTone(int tone, int duration) {
+  for (long i = 0; i < duration * 1000L; i += tone * 2) {
+    digitalWrite(speakerPin, HIGH);
+    delayMicroseconds(tone);
+    digitalWrite(speakerPin, LOW);
+    delayMicroseconds(tone);
   }
-
-void setColor(int r, int g, int b)
-{
-  r = r % 255;
-  g = g % 255;
-  b = b % 255;
-
-  analogWrite(LED_R, r);
-  analogWrite(LED_G, g);
-  analogWrite(LED_B, b);
+}
+ 
+void playNote(char note, int duration) {
+  char names[] = { 'c', 'd', 'e', 'f', 'g', 'a', 'b', 'C' };
+  int tones[] = { 1915, 1700, 1519, 1432, 1275, 1136, 1014, 956 };
+  for (int i = 0; i < 8; i++) {
+    if (names[i] == note) {
+      playTone(tones[i], duration);
+    }
   }
+}
