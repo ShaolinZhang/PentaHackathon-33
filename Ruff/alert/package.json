@@ -9,6 +9,12 @@
             "ruff-mbd-v1": "^4.2.0",
             "*": "*"
         },
-        "dependencies": {}
+        "dependencies": {
+            "gy-30": "^3.0.5",
+            "button-gpio": "^2.0.5",
+            "dht11": "^0.3.5",
+            "ky-016": "^2.0.4",
+            "buzzer-gpio": "^0.2.4"
+        }
     }
 }

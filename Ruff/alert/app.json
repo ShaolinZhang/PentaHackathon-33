@@ -1,3 +1,84 @@
 {
-    "devices": []
+    "devices": [
+        {
+            "id": "light",
+            "model": "GY-30",
+            "driver": "gy-30",
+            "args": {
+                "highResolution": true
+            },
+            "inputs": {
+                "i2c": {
+                    "type": "i2c",
+                    "args": {
+                        "address": 35
+                    }
+                }
+            }
+        },
+        {
+            "id": "button",
+            "model": "CK002",
+            "driver": "button-gpio",
+            "inputs": {
+                "gpio": {
+                    "type": "gpio",
+                    "args": {
+                        "direction": "in",
+                        "edge": "both"
+                    }
+                }
+            }
+        },
+        {
+            "id": "luminature",
+            "model": "DHT11",
+            "driver": "dht11",
+            "inputs": {
+                "gpio": {
+                    "type": "gpio",
+                    "reserve": "gpio-18/gpio"
+                }
+            }
+        },
+        {
+            "id": "RGB",
+            "model": "KY-016",
+            "driver": "ky-016",
+            "inputs": {
+                "pwm-r": {
+                    "type": "pwm",
+                    "args": {
+                        "frequency": 800
+                    }
+                },
+                "pwm-g": {
+                    "type": "pwm",
+                    "args": {
+                        "frequency": 800
+                    }
+                },
+                "pwm-b": {
+                    "type": "pwm",
+                    "args": {
+                        "frequency": 800
+                    }
+                }
+            }
+        },
+        {
+            "id": "buzzer",
+            "model": "FC-49",
+            "driver": "buzzer-gpio",
+            "inputs": {
+                "gpio": {
+                    "type": "gpio",
+                    "args": {
+                        "direction": "out",
+                        "level": "low"
+                    }
+                }
+            }
+        }
+    ]
 }
