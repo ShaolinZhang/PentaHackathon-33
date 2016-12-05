@@ -9,7 +9,9 @@ Hardwares Specifications
 Protege Nos concept uses the following hardware:
 
 - DFRobot Arduino UNO, a microcontroller board based on the ATmega328 with both digital I/O pins and analog I/O pins. Product link: <http://www.arduino.org/products/boards/arduino-uno>
+- Sensors on Arduino: tracking, avoid, buzzer, RGB LED, and GY-91 gyroscope.
 - Ruff Internet of Things kit, a JavaScript-based IoT kit which is very user-friendly to newbies. Ruff is a JavaScript runtime specialized in IoT development. Ruff makes embedded coding easy and more efficient by providing HAL, asynchronous I/O, and event-driven programming. Product link: <http://www.ruff.io>
+- Sensors on Ruff: RGB LED, humidity and temperature, luminosity, buzzer
 
 External APIs
 -------------
